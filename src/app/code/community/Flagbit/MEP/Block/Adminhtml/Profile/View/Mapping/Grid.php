@@ -35,6 +35,15 @@ class Flagbit_MEP_Block_Adminhtml_Profile_View_Mapping_Grid extends Mage_Adminht
                     'class' => 'add'
                 ))
         );
+
+        $this->setChild('generate_template_button',
+            $this->getLayout()->createBlock('adminhtml/widget_button')
+                ->setData(array(
+                    'label' => Mage::helper('adminhtml')->__('Generate new template'),
+                    'onclick' => "alert('button pressed');" . 'setLocation(\''.$this->getUrl('*/profile/generateTemplate').'\')'
+                ))
+        );
+
         return $this;
     }
 
@@ -43,6 +52,10 @@ class Flagbit_MEP_Block_Adminhtml_Profile_View_Mapping_Grid extends Mage_Adminht
         return $this->getChildHtml('addfilter_button');
     }
 
+    public function getGenerateTemplateButtonHtml()
+    {
+        return $this->getChildHtml('generate_template_button');
+    }
 
     public function getRowUrl($row)
     {
@@ -68,6 +81,7 @@ class Flagbit_MEP_Block_Adminhtml_Profile_View_Mapping_Grid extends Mage_Adminht
     {
         $html = parent::getMainButtonsHtml();
         $html .= $this->getAddfilterButtonHtml();
+        $html .= $this->getGenerateTemplateButtonHtml();
 
         return $html;
     }
@@ -126,6 +140,14 @@ class Flagbit_MEP_Block_Adminhtml_Profile_View_Mapping_Grid extends Mage_Adminht
             'header' => Mage::helper('mep')->__('To Field'),
             'align' => 'left',
             'index' => 'to_field',
+            'sortable' => false
+        ));
+
+        $this->addColumn('twig_content_template', array(
+            'header' => Mage::helper('mep')->__('Twig Field'),
+            'align' => 'left',
+            'index' => 'twig_content_template',
+            'filter' => false,
             'sortable' => false
         ));
 
